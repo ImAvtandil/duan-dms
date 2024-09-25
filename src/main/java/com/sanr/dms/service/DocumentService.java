@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -65,28 +66,35 @@ public class DocumentService {
         return result;
     }
 
-    public List<Document> getUserDocuments(String name){
-        return documentRepository.findByUser(name);
+    public List<DocumentDto> getUserDocuments(String name){
+        List<Document> documents = documentRepository.findByUser(name);
+        return documents.stream().map(DocumentDto::convert).collect(Collectors.toList());
     }
 
-    public List<Document> getDocumentsBySignDateRange(Date dateFrom, Date dateTo){
-        return documentRepository.findBySignDateBetween(dateFrom, dateTo);
+    public List<DocumentDto> getDocumentsBySignDateRange(Date dateFrom, Date dateTo){
+        List<Document> documents = documentRepository.findBySignDateBetween(dateFrom, dateTo);
+        return documents.stream().map(DocumentDto::convert).collect(Collectors.toList());
     }
 
-    public List<Document> getDocumentsByCreateDateRange(Date dateFrom, Date dateTo){
-        return documentRepository.findByCreatedDateBetween(dateFrom, dateTo);
+    public List<DocumentDto> getDocumentsByCreateDateRange(Date dateFrom, Date dateTo){
+        List<Document> documents = documentRepository.findByCreatedDateBetween(dateFrom, dateTo);
+        return documents.stream().map(DocumentDto::convert).collect(Collectors.toList());
     }
 
-    public List<Document> getSignedDocuments(){
-        return documentRepository.findBySignDateIsNotNull();
+    public List<DocumentDto> getSignedDocuments(){
+        List<Document> documents = documentRepository.findBySignDateIsNotNull();
+        return documents.stream().map(DocumentDto::convert).collect(Collectors.toList());
     }
 
-    public List<Document> getUnSignedDocuments(){
-        return documentRepository.findBySignDateIsNull();
+    public List<DocumentDto> getUnSignedDocuments(){
+        List<Document> documents = documentRepository.findBySignDateIsNull();
+        return documents.stream().map(DocumentDto::convert).collect(Collectors.toList());
     }
 
-    public Document create(Document document){
-        return documentRepository.saveAndFlush(document);
+    public DocumentDto create(DocumentDto documentDto){
+        Document document = DocumentDto.convert(documentDto);
+        document =  documentRepository.saveAndFlush(document);
+        return (DocumentDto) DocumentDto.convert(document);
     }
 
 }
