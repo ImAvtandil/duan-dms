@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.sanr.dms.dto.DocumentDto;
-import com.sanr.dms.entity.Document;
 import com.sanr.dms.service.DocumentService;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -35,11 +34,10 @@ public class DocumentController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Document> createDocument(@RequestBody Document document) {
-        System.out.println(document.getName());
-        Document newDocument = documentService.create(document);
+    public ResponseEntity<DocumentDto> createDocument(@RequestBody DocumentDto documentDto) {
+        DocumentDto newDocument = documentService.create(documentDto);
         System.out.println(newDocument.getId());
-        return ResponseEntity.ok().body(document);
+        return ResponseEntity.ok().body(newDocument);
     }
 
     @PutMapping("")
@@ -54,24 +52,19 @@ public class DocumentController {
         String resultStr = result?"OK. DELETED":"ERROR. OBJECT MISSING";
         return resultStr;
     }
-    
 
     @GetMapping("/user")
-    public List<Document> getUserDocument(@RequestParam String name) {
+    public List<DocumentDto> getUserDocument(@RequestParam String name) {
         return documentService.getUserDocuments(name);
     }
 
     @GetMapping("/get-by-created-date")
-    public List<Document> getMethodName(@RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo) {
+    public List<DocumentDto> getMethodName(@RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo) {
         return documentService.getDocumentsByCreateDateRange(dateFrom, dateTo);
     }
 
     @GetMapping("/signed")
-    public List<Document> getMethodName(@RequestParam("status") Boolean status) {
+    public List<DocumentDto> getMethodName(@RequestParam("status") Boolean status) {
         return status?documentService.getSignedDocuments():documentService.getUnSignedDocuments();
     }
-    
-    
-    
-    
 }
