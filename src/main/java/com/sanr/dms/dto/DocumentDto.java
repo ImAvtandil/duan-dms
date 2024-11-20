@@ -8,16 +8,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sanr.dms.entity.Document;
 import com.sanr.dms.entity.DocumentTypeEnum;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class DocumentDto extends ConvertAbstract{
 
     @JsonInclude()
     @JsonAlias("document-id")
     private BigInteger id;
+    @NotBlank
     private DocumentTypeEnum documentType;
+    @NotBlank
+    @Size(min = 1, max = 120)
     private String name;
+    @NotBlank
     private String body;
     private Date createdDate;
     private Date signDate;
+    @NotBlank
     private String user;
 
     public BigInteger getId() {
