@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.sanr.dms.dto.DocumentDto;
-import com.sanr.dms.entity.Document;
 import com.sanr.dms.service.DocumentService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -57,16 +56,16 @@ public class DocumentController {
             schema = @Schema(implementation = DocumentDto.class)) }),
        @ApiResponse(responseCode = "400", description = "Invalid input provided") })
     @PostMapping("")
-    public ResponseEntity<Document> createDocument(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+    public ResponseEntity<DocumentDto> createDocument(@io.swagger.v3.oas.annotations.parameters.RequestBody(
         description = "Document to create", required = true,
         content = @Content(mediaType = "application/json",
         schema = @Schema(implementation = DocumentDto.class),
         examples = @ExampleObject(value = "{ \"documentType\": \"VacationLeaveApplication\", \"name\": \"Some name\", \"body\": \"Some body\", \"user\": \"Jone\"}")))
-      @RequestBody Document document) {
+      @RequestBody DocumentDto document) {
         System.out.println(document.getName());
-        Document newDocument = documentService.create(document);
+        DocumentDto newDocument = documentService.create(document);
         System.out.println(newDocument.getId());
-        return ResponseEntity.ok().body(document);
+        return ResponseEntity.ok().body(newDocument);
     }
 
     @Operation(summary = "Update document")
@@ -104,19 +103,19 @@ public class DocumentController {
         @ApiResponse(responseCode = "404", description = "Documents not found", 
             content = @Content) })
     @GetMapping("/user")
-    public List<Document> getUserDocument(@RequestParam String name) {
+    public List<DocumentDto> getUserDocument(@RequestParam String name) {
         return documentService.getUserDocuments(name);
     }
 
     @Operation(summary = "Get documents by create date range")
     @GetMapping("/get-by-created-date")
-    public List<Document> getMethodName(@RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo) {
+    public List<DocumentDto> getMethodName(@RequestParam("dateFrom") Date dateFrom, @RequestParam("dateTo") Date dateTo) {
         return documentService.getDocumentsByCreateDateRange(dateFrom, dateTo);
     }
 
     @Operation(summary = "Get signed documents")
     @GetMapping("/signed")
-    public List<Document> getMethodName(@RequestParam("status") Boolean status) {
+    public List<DocumentDto> getMethodName(@RequestParam("status") Boolean status) {
         return status?documentService.getSignedDocuments():documentService.getUnSignedDocuments();
     }
     
