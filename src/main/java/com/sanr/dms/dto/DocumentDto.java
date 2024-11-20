@@ -9,9 +9,6 @@ import com.sanr.dms.entity.DocumentTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 public class DocumentDto extends ConvertAbstract{
 
     private BigInteger id;
