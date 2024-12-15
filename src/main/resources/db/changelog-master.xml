@@ -6,6 +6,8 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
    <!-- <include file="db/data/be-lection8.xml" relativeToChangelogFile="false"/>
     <include file="db/data/be-lection9-order.xml" relativeToChangelogFile="false"/>-->
-    <include file="db/data/init-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="db/data/laba4-changelog.xml" relativeToChangelogFile="false"/>
+    <include file="./data/init-changelog.xml" relativeToChangelogFile="false"/>
+    
 
 </databaseChangeLog>
