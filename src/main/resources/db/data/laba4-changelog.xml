@@ -4,7 +4,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="user">
+    <changeSet id="1_create_table_orders" author="Lishchynskyi">
         <createTable tableName="orders">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
@@ -18,7 +18,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="user">
+    <changeSet id="2_create_table_order_count" author="Lishchynskyi">
         <createTable tableName="order_count">
             <column name="id" type="serial">
                 <constraints primaryKey="true"/>
@@ -29,7 +29,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="user">
+    <changeSet id="3_insert" author="Lishchynskyi">
         <insert tableName="order_count">
             <column name="id" valueNumeric="1"/>
             <column name="total_orders" valueNumeric="0"/>
