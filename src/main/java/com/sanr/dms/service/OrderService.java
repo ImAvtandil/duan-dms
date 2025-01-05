@@ -33,7 +33,7 @@ public class OrderService {
         orderRepository.save(order);
 
         // Update the order count 
-        Optional<OrderCount> orderCountOptional = orderCountRepository.findById(1L);
+        Optional<OrderCount> orderCountOptional = orderCountRepository.findByIdForUpdate(1L);
         if (orderCountOptional.isPresent()) {
             OrderCount orderCount = orderCountOptional.get();
             orderCount.setTotalOrders(orderCount.getTotalOrders() + 1);
